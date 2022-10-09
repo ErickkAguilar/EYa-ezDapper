@@ -65,8 +65,16 @@ namespace CRUDDapper
                 List<Alumno> list = resultado.Objetos;
                 foreach (var item in list)
                 {
-                    Console.WriteLine(" {IdAlumno}: " + item.IdAlumno + " {Nombre}: " + item.Nombre + " {Apellido Paterno}: " + item.ApellidoPaterno + " {Apellido Materno}: " + item.ApellidoMaterno + " {Fecha Nacimiento}: " +
-                            item.FechaNacimiento + " {Matricula}: " + item.Matricula + " {Sexo}: " + item.Sexo + " {Email}: " + item.Email + " {IdSemestre}: " + item.IdSemestre);
+                    Console.WriteLine(" {IdAlumno}: " + item.IdAlumno);
+                    Console.WriteLine(" {Nombre}: " + item.Nombre);
+                    Console.WriteLine(" {Apellido Paterno}: " + item.ApellidoPaterno);
+                    Console.WriteLine(" {Apellido Materno}: " + item.ApellidoMaterno);
+                    Console.WriteLine(" {Fecha Nacimiento}: " + item.FechaNacimiento);
+                    Console.WriteLine(" {Matricula}: " + item.Matricula);
+                    Console.WriteLine(" {Sexo}: " + item.Sexo);
+                    Console.WriteLine(" {Email}: " + item.Email);
+                    Console.WriteLine(" {IdSemestre}: " + item.IdSemestre);
+                    Console.WriteLine("**********************************");
                 }
                 Console.ReadKey();
             }
@@ -92,13 +100,41 @@ namespace CRUDDapper
             }
         }
 
+        public static void GetById()
+        {
+            Alumno alumno = new Alumno();//instancia
+            Console.WriteLine("Ingrese el Id del alumno que desea observar");
+            alumno.IdAlumno = byte.Parse(Console.ReadLine());
+
+            Resultado resultado = Alumno.GetById(alumno);
+
+            if (resultado.Mensaje == "Correcto")
+            {
+                List<Alumno> list = resultado.Objetos;
+                foreach (var item in list)
+                {
+                    Console.WriteLine(" {IdAlumno}: " + item.IdAlumno);
+                    Console.WriteLine(" {Nombre}: " + item.Nombre);
+                    Console.WriteLine(" {Apellido Paterno}: " + item.ApellidoPaterno);
+                    Console.WriteLine(" {Apellido Materno}: " + item.ApellidoMaterno);
+                    Console.WriteLine(" {Fecha Nacimiento}: " + item.FechaNacimiento);
+                    Console.WriteLine(" {Matricula}: " + item.Matricula);
+                    Console.WriteLine(" {Sexo}: " + item.Sexo);
+                    Console.WriteLine(" {Email}: " + item.Email);
+                    Console.WriteLine(" {IdSemestre}: " + item.IdSemestre);
+                }
+                Console.ReadKey();
+            }
+        }
+
         public static void Update()
         {
             Alumno alumno = new Alumno();//instancia
             Console.WriteLine("Ingrese el Id del alumno que desea actualizar");
             alumno.IdAlumno = byte.Parse(Console.ReadLine());
 
-            IEnumerable<Alumno> list = alumno.Byid(alumno);
+            Resultado busqueda = Alumno.GetById(alumno);
+            List<Alumno> list = busqueda.Objetos;
             foreach (var item in list)
             {
                 Console.WriteLine("Actualice el nombre del alumno: " + item.Nombre);

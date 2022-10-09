@@ -123,15 +123,31 @@ namespace CRUDDapper
             return resultado;
         }
 
-        public IEnumerable<Alumno> Byid(Alumno alumno)
+        public static Resultado GetById(Alumno alumno)
         {
             Resultado resultado = new Resultado();
-
+            try
+            {
                 using (var context = new SqlConnection(Conexion.getConexion()))
                 {
                     var query = context.Query<Alumno>($"AlumnoGetById '{alumno.IdAlumno}'");
-                    return query;
+
+                    resultado.Objetos = new List<Alumno>();
+                    if (query != null)
+                    {
+                        foreach (var item in query)
+                        {
+                            resultado.Objetos.Add(item);
+                        }
+                        resultado.Mensaje = "Correcto";
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                resultado.Mensaje = "Error" + ex;
+            }
+            return resultado;
         }
     }
 }
